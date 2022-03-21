@@ -14,67 +14,58 @@ import org.junit.jupiter.api.Assertions;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.notNullValue;
 
+public class UpdateTestStepDefinition extends ServiceSetUp{
 
-
-public class CreateTestStepDefinition extends ServiceSetUp {
-
-    public static final Logger LOGGER = Logger.getLogger(CreateTestStepDefinition.class);
+    public static final Logger LOGGER = Logger.getLogger(UpdateTestStepDefinition.class);
     private Response response;
     private RequestSpecification resquest;
 
-    @Given("el usuario esta en la pagina de creacion con el name {string} y job {string}")
-    public void elUsuarioEstaEnLaPaginaDeCreacionConElNameYJob(String name, String job) {
 
+    @Given("el usuario esta en la pagina de actualizacion con name {string} y el job {string}")
+    public void elUsuarioEstlaEnLaPaginaDeActualizacionConNaneYElJob(String name, String job) {
         try{
             generalSetUp();
             resquest = given()
                     .log()
                     .all()
                     .contentType(ContentType.JSON)
-                    .body(body(name, job));
+                    .body(bodyU(name, job));
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
             Assertions.fail(e.getMessage());
         }
-
     }
-    @When("el usuario hace la peticion de cracion de usuario")
-    public void elUsiarioHaceLaPeticionDeCracionDeUsuario() {
+    @When("cuando el usuario hace una peticion para actualizar el job")
+    public void cuandoElUsuarioHaceUnaPeticionParaActualizarElJob() {
 
         try{
             response = resquest.when()
-                    .post(CREATE_RESOURCE);
+                    .post(UPDATE_RESOURCE);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
             Assertions.fail(e.getMessage());
         }
 
-
     }
-    @Then("el usuario debe ver un codigo de respuesta exitoso y un token de respuesta")
-    public void elUsiarioDebeVerUnCodigoDeRespuestaExitosoYUnTokenDeRespuesta() {
-
+    @Then("el usuario debera ver un codigo de respuesta exitoso y un token de respuesta.")
+    public void elUsuarioDeberaVerUnCodigoDeRespuestaExitosoYUnTokenDeRespuesta() {
         try{
             response.then()
                     .log()
                     .all()
                     .statusCode(HttpStatus.SC_CREATED)
-                    .body("createdAt", notNullValue());
+                    .body("updatedAt", notNullValue());
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
             Assertions.fail(e.getMessage());
         }
-
-
-
     }
 
-    private String body(String name, String job){
+    private String bodyU(String name, String job){
         return "{\n" +
                 "    \"name\": \"morpheus\",\n" +
-                "    \"job\": \"leader\",\n" +
-                "    \"id\": \"676\",\n" +
-                "    \"createdAt\": \"2022-03-21T22:38:34.991Z\"\n" +
+                "    \"job\": \"zion resident\",\n" +
+                "    \"updatedAt\": \"2022-03-21T23:27:22.414Z\"\n" +
                 "}";
     }
 

@@ -9,6 +9,7 @@ public class ServiceSetUp {
     private static final String BASE_URI = "https://reqres.in";
     private static final String BASE_PATH = "/api";
     protected static final String CREATE_RESOURCE = "/users";
+    protected static final String UPDATE_RESOURCE = "/users/2";
 
     protected void generalSetUp(){
         setUpLog4j2();
