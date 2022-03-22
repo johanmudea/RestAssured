@@ -10,7 +10,6 @@ import io.restassured.specification.RequestSpecification;
 import org.apache.http.HttpStatus;
 import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Assertions;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.notNullValue;
 
@@ -18,14 +17,13 @@ public class UpdateTestStepDefinition extends ServiceSetUp{
 
     public static final Logger LOGGER = Logger.getLogger(UpdateTestStepDefinition.class);
     private Response response;
-    private RequestSpecification resquest;
-
+    private RequestSpecification request;
 
     @Given("el usuario esta en la pagina de actualizacion con name {string} y el job {string}")
     public void elUsuarioEstlaEnLaPaginaDeActualizacionConNaneYElJob(String name, String job) {
         try{
             generalSetUp();
-            resquest = given()
+            request = given()
                     .log()
                     .all()
                     .contentType(ContentType.JSON)
@@ -35,25 +33,27 @@ public class UpdateTestStepDefinition extends ServiceSetUp{
             Assertions.fail(e.getMessage());
         }
     }
+
     @When("cuando el usuario hace una peticion para actualizar el job")
     public void cuandoElUsuarioHaceUnaPeticionParaActualizarElJob() {
 
         try{
-            response = resquest.when()
-                    .post(UPDATE_RESOURCE);
+            response = request.when()
+                    .put(UPDATE_RESOURCE);
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
             Assertions.fail(e.getMessage());
         }
 
     }
+
     @Then("el usuario debera ver un codigo de respuesta exitoso y un token de respuesta.")
     public void elUsuarioDeberaVerUnCodigoDeRespuestaExitosoYUnTokenDeRespuesta() {
         try{
             response.then()
                     .log()
                     .all()
-                    .statusCode(HttpStatus.SC_CREATED)
+                    .statusCode(HttpStatus.SC_OK)
                     .body("updatedAt", notNullValue());
         } catch (Exception e){
             LOGGER.error(e.getMessage(), e);
@@ -68,6 +68,5 @@ public class UpdateTestStepDefinition extends ServiceSetUp{
                 "    \"updatedAt\": \"2022-03-21T23:27:22.414Z\"\n" +
                 "}";
     }
-
 
 }

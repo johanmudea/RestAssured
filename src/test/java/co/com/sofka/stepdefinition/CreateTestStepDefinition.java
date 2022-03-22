@@ -14,8 +14,6 @@ import org.junit.jupiter.api.Assertions;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.notNullValue;
 
-
-
 public class CreateTestStepDefinition extends ServiceSetUp {
 
     public static final Logger LOGGER = Logger.getLogger(CreateTestStepDefinition.class);
@@ -49,8 +47,8 @@ public class CreateTestStepDefinition extends ServiceSetUp {
             Assertions.fail(e.getMessage());
         }
 
-
     }
+
     @Then("el usuario debe ver un codigo de respuesta exitoso y un token de respuesta")
     public void elUsiarioDebeVerUnCodigoDeRespuestaExitosoYUnTokenDeRespuesta() {
 
@@ -65,8 +63,6 @@ public class CreateTestStepDefinition extends ServiceSetUp {
             Assertions.fail(e.getMessage());
         }
 
-
-
     }
 
     private String body(String name, String job){
@@ -77,6 +73,5 @@ public class CreateTestStepDefinition extends ServiceSetUp {
                 "    \"createdAt\": \"2022-03-21T22:38:34.991Z\"\n" +
                 "}";
     }
-
 
 }
